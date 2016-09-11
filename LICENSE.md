@@ -1,4 +1,3 @@
-(Revised BSD License)
 Copyright (c) 2016, Michael Peters
 All rights reserved.
 
