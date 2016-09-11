@@ -1,0 +1,5 @@
+# lets ignore object files for the sake of a cleaner repository
+*.o
+.DS_Store
+.*.swp
+
