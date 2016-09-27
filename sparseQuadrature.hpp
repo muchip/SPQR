@@ -2,23 +2,22 @@
 #define __SPARSEQUADRATURE__CLASS__
 
 #include <algorithm>
-#include <iostream>
 
 #include <Eigen/Dense>
 
 #include "CONSTANTS.hpp"
 
-#include "sparseIndexSet.hpp"
-#include "tensorProductQuadrature.hpp"
-#include "univariateQuadrature.hpp"
+#include "SparseIndexSet.hpp"
+#include "TensorProductQuadrature.hpp"
+#include "UnivariateQuadrature.hpp"
 
-class sparseQuadrature {
+class SparseQuadrature {
  public:
-  sparseQuadrature(void){};
-  sparseQuadrature(const sparseIndexSet &spInd, univariateQuadrature &Q);
-  void init_sparseQuadrature(const sparseIndexSet &spInd,
-                             univariateQuadrature &Q);
-  void purge_sparseQuadrature(void);
+  SparseQuadrature(void){};
+  SparseQuadrature(const SparseIndexSet &spInd, UnivariateQuadrature &Q);
+  void computeSparseQuadrature(const SparseIndexSet &spInd,
+                               UnivariateQuadrature &Q);
+  void purgeSparseQuadrature(void);
   const Eigen::MatrixXd &get_qPoints(void) const;
   const Eigen::VectorXd &get_qWeights(void) const;
 

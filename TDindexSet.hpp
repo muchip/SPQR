@@ -8,22 +8,22 @@
 #include <Eigen/Dense>
 
 // include base class
-#include "sparseIndexSet.hpp"
+#include "SparseIndexSet.hpp"
 
 #include "CONSTANTS.hpp"
 
 
-class TDindexSet : public sparseIndexSet {
+class TDindexSet : public SparseIndexSet {
  public:
   // override base class methods
-  void comp_indexSet(int q, const Eigen::VectorXd &w);
+  void computeIndexSet(int q, const Eigen::VectorXd &w);
 
   const Eigen::VectorXi &get_sortW(void) const;
 
  protected:
   // override base class methods
-  void Yw_alpha(int maxBit, int *k, double q, Eigen::VectorXi &currInd);
-  int cw_alpha(double q, int maxBit, int cw, int lvl);
+  void combiIndexSet(int maxBit, int *k, double q, Eigen::VectorXi &currInd);
+  int combiWeights(double q, int maxBit, int cw, int lvl);
 
   // new methods and variables related to weight vector
   void init_sortW(void);

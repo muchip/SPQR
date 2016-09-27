@@ -55,9 +55,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   int myCASE = 0;
   TDindexSet TDind;
   HCindexSet HCind;
-  sparseIndexSet GENind;
-  sparseQuadrature Q;
-  cell2univariateQuadrature CellUniQ;
+  SparseIndexSet GENind;
+  SparseQuadrature Q;
+  Cell2univariateQuadrature CellUniQ;
 
   if (nrhs != 5) {
     mexErrMsgIdAndTxt(
@@ -88,9 +88,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
       mexErrMsgIdAndTxt(
           "MATLAB:MXsparseQuadraturecpp",
           "Last argument has to be array if TD is used. Check help.");
-    TDind.comp_indexSet(q, Eigen::Map<Eigen::VectorXd>(mxGetPr(prhs[4]), dim));
-    Q = sparseQuadrature(TDind, CellUniQ);
-    Q.purge_sparseQuadrature();
+    TDind.computeIndexSet(q, Eigen::Map<Eigen::VectorXd>(mxGetPr(prhs[4]), dim));
+    Q = SparseQuadrature(TDind, CellUniQ);
+    Q.purgeSparseQuadrature();
     plhs[2] = mxCreateDoubleMatrix(dim, 1, mxREAL);
     Eigen::Map<Eigen::VectorXd> sort(mxGetPr(plhs[2]), dim);
     const Eigen::VectorXi &mySort = TDind.get_sortW();
@@ -101,18 +101,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
           "MATLAB:MXsparseQuadraturecpp",
           "Last argument has to be array if HC is used. Check help.");
 
-    HCind.comp_indexSet(q, Eigen::Map<Eigen::VectorXd>(mxGetPr(prhs[4]), dim));
-    Q = sparseQuadrature(HCind, CellUniQ);
-    Q.purge_sparseQuadrature();
+    HCind.computeIndexSet(q, Eigen::Map<Eigen::VectorXd>(mxGetPr(prhs[4]), dim));
+    Q = SparseQuadrature(HCind, CellUniQ);
+    Q.purgeSparseQuadrature();
   } else if (type == "Gen") {
     if (!mxIsClass(prhs[4], "function_handle"))
       mexErrMsgIdAndTxt("MATLAB:MXsparseQuadraturecpp",
                         "Last argument has to be function handle if Gen is "
                         "used. Check help.");
 
-    GENind.comp_indexSet(q, dim, MatlabCpFun(prhs[4], dim));
-    Q = sparseQuadrature(GENind, CellUniQ);
-    Q.purge_sparseQuadrature();
+    GENind.computeIndexSet(q, dim, MatlabCpFun(prhs[4], dim));
+    Q = SparseQuadrature(GENind, CellUniQ);
+    Q.purgeSparseQuadrature();
   }
 
   const Eigen::MatrixXd &myqPoints = Q.get_qPoints();

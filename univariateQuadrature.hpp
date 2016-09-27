@@ -14,9 +14,9 @@ struct Quadrature {
 /**   \brief basis class for univariate quadrature rules
 *
 */
-class univariateQuadrature {
+class UnivariateQuadrature {
  public:
-  univariateQuadrature(void) : _maxLvl(-1){};
+  UnivariateQuadrature(void) : _maxLvl(-1){};
   // setter...
   virtual void initQuadrature(int maxLvl) = 0;
   virtual void resizeQuadrature(int maxLvl) = 0;

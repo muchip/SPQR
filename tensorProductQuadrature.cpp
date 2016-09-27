@@ -3,15 +3,15 @@
 /**    \brief default constructor without arguments
 *
 */
-tensorProductQuadrature::tensorProductQuadrature(void) {}
+TensorProductQuadrature::TensorProductQuadrature(void) {}
 
 /**    \brief constructor with quadrature degrees calls init_quadrature
 *      \param[in] degs maximum quadrature degrees in each dimension
 *
 */
-tensorProductQuadrature::tensorProductQuadrature(const Eigen::VectorXi &lvl,
-                                                 univariateQuadrature &Q) {
-  init_quadrature(lvl, Q);
+TensorProductQuadrature::TensorProductQuadrature(const Eigen::VectorXi &lvl,
+                                                 UnivariateQuadrature &Q) {
+  initQuadrature(lvl, Q);
 }
 
 /**    \brief initializes the tensor product quadrature based on the
@@ -19,8 +19,8 @@ tensorProductQuadrature::tensorProductQuadrature(const Eigen::VectorXi &lvl,
 *      \param[in] degs maximum quadrature degrees in each dimension
 *
 */
-void tensorProductQuadrature::init_quadrature(const Eigen::VectorXi &lvl,
-                                              univariateQuadrature &Q) {
+void TensorProductQuadrature::initQuadrature(const Eigen::VectorXi &lvl,
+                                              UnivariateQuadrature &Q) {
   Eigen::VectorXi base;
   Eigen::VectorXi nPtsInQuad;
   int remainder = 0;
@@ -56,7 +56,7 @@ void tensorProductQuadrature::init_quadrature(const Eigen::VectorXi &lvl,
 /**   \brief this function needs a comment
 *
 */
-Eigen::VectorXi tensorProductQuadrature::computeBase(
+Eigen::VectorXi TensorProductQuadrature::computeBase(
     const Eigen::VectorXi &lvl) {
   Eigen::VectorXi base;
   base = Eigen::VectorXi::Ones(lvl.size());
@@ -68,19 +68,19 @@ Eigen::VectorXi tensorProductQuadrature::computeBase(
 /**   \brief make an educated guess, what this function does...
 *
 */
-const Eigen::VectorXd &tensorProductQuadrature::get_weights(void) const {
+const Eigen::VectorXd &TensorProductQuadrature::get_weights(void) const {
   return _weights;
 }
 
 /**   \brief make an educated guess, what this function does...
 *
 */
-const Eigen::MatrixXd &tensorProductQuadrature::get_points(void) const {
+const Eigen::MatrixXd &TensorProductQuadrature::get_points(void) const {
   return _points;
 }
 
 /**   \brief make an educated guess, what this function does...
 *
 */
-int tensorProductQuadrature::get_nPts(void) const { return _nPts; }
+int TensorProductQuadrature::get_nPts(void) const { return _nPts; }
 

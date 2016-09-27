@@ -1,7 +1,7 @@
 #ifndef __HCINDEXSET__CLASS__
 #define __HCINDEXSET__CLASS__
 
-#include "sparseIndexSet.hpp"
+#include "SparseIndexSet.hpp"
 
 #include <Eigen/Dense>
 
@@ -10,10 +10,10 @@
 *          functor. Weights my be unsorted in HC case and no sorting is
 *          performed.
 */
-class HCindexSet : public sparseIndexSet {
+class HCindexSet : public SparseIndexSet {
  public:
-  void comp_indexSet(int q, const Eigen::VectorXd &w) {
-    sparseIndexSet::comp_indexSet(q, w.size(), HCindexSet::cpFun(w));
+  void computeIndexSet(int q, const Eigen::VectorXd &w) {
+    SparseIndexSet::computeIndexSet(q, w.size(), HCindexSet::cpFun(w));
   };
 
  protected:

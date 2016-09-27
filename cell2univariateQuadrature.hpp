@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <iomanip>
-#include "univariateQuadrature.hpp"
+#include "UnivariateQuadrature.hpp"
 
 #include <Eigen/Dense>
 
@@ -14,7 +14,7 @@
 /** \brief extends univariate quadrature and wraps univariate quadrature
 *          formulas provided by matlab into a univariateQuadrature
 */
-class cell2univariateQuadrature : public univariateQuadrature {
+class Cell2univariateQuadrature : public UnivariateQuadrature {
  public:
   void initQuadrature(int maxLvl){
       // dummy routine to satisfy compiler, since virtual method has

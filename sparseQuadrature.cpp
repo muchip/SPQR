@@ -1,13 +1,13 @@
-#include "sparseQuadrature.hpp"
+#include "SparseQuadrature.hpp"
 
 /**   \brief non-void constructor
 *     \param[in] spInd is an object of the class sparseIndexSet
 *     \param[in] Q is an object of the class univariateQuadrature
 *
 */
-sparseQuadrature::sparseQuadrature(const sparseIndexSet &spInd,
-                                   univariateQuadrature &Q) {
-  sparseQuadrature::init_sparseQuadrature(spInd, Q);
+SparseQuadrature::SparseQuadrature(const SparseIndexSet &spInd,
+                                   UnivariateQuadrature &Q) {
+  SparseQuadrature::computeSparseQuadrature(spInd, Q);
 }
 
 /**   \brief initializes the sparse quadrature based on the sparse index set
@@ -16,8 +16,8 @@ sparseQuadrature::sparseQuadrature(const sparseIndexSet &spInd,
 *     \param[in] Q is an object of the class univariateQuadrature
 *
 */
-void sparseQuadrature::init_sparseQuadrature(const sparseIndexSet &spInd,
-                                             univariateQuadrature &Q) {
+void SparseQuadrature::computeSparseQuadrature(const SparseIndexSet &spInd,
+                                               UnivariateQuadrature &Q) {
   int nPts = 0;
   int M = 0;
   // get references to the index set alpha and the corresponding weights cw
@@ -29,18 +29,16 @@ void sparseQuadrature::init_sparseQuadrature(const sparseIndexSet &spInd,
   _qWeights.resize(__MEMCHUNKSIZE__);
   // initialize all tensor product quadrature points and weights
   for (int j = 0; j < alpha.cols(); ++j) {
-    tensorProductQuadrature locTPQ(alpha.col(j), Q);
-    if (__MEMCHUNKSIZE__ < locTPQ.get_nPts()) {
-      std::cout << "MEMCHUNKSIZE(" << __MEMCHUNKSIZE__
-                << ") too small, no quadrature computed " << locTPQ.get_nPts()
-                << "\n";
-      _qPoints.resize(0, 0);
-      _qWeights.resize(0);
-      return;
-    }
+    TensorProductQuadrature locTPQ(alpha.col(j), Q);
+    // resize if necessary
     if (_qPoints.cols() <= nPts + locTPQ.get_nPts()) {
-      _qPoints.conservativeResize(M, _qPoints.cols() + __MEMCHUNKSIZE__);
-      _qWeights.conservativeResize(_qWeights.size() + __MEMCHUNKSIZE__);
+      if (locTPQ.get_nPts() < __MEMCHUNKSIZE__) {
+        _qPoints.conservativeResize(M, _qPoints.cols() + __MEMCHUNKSIZE__);
+        _qWeights.conservativeResize(_qWeights.size() + __MEMCHUNKSIZE__);
+      } else {
+        _qPoints.conservativeResize(M, _qPoints.cols() + locTPQ.get_nPts());
+        _qWeights.conservativeResize(_qWeights.size() + locTPQ.get_nPts());
+      }
     }
     _qPoints.block(0, nPts, M, locTPQ.get_nPts()) = locTPQ.get_points();
     _qWeights.segment(nPts, locTPQ.get_nPts()) = cw(j) * locTPQ.get_weights();
@@ -60,7 +58,7 @@ void sparseQuadrature::init_sparseQuadrature(const sparseIndexSet &spInd,
 *            evaluations of a given point
 *
 */
-void sparseQuadrature::purge_sparseQuadrature(void) {
+void SparseQuadrature::purgeSparseQuadrature(void) {
   // get variables to store sorted arrays
   Eigen::VectorXi sortVec;
   Eigen::VectorXi uniquePoints;
@@ -125,13 +123,13 @@ void sparseQuadrature::purge_sparseQuadrature(void) {
 /**   \brief make an educated guess, what this function does...
 *
 */
-const Eigen::MatrixXd &sparseQuadrature::get_qPoints(void) const {
+const Eigen::MatrixXd &SparseQuadrature::get_qPoints(void) const {
   return _qPoints;
 }
 
 /**   \brief make an educated guess, what this function does...
 *
 */
-const Eigen::VectorXd &sparseQuadrature::get_qWeights(void) const {
+const Eigen::VectorXd &SparseQuadrature::get_qWeights(void) const {
   return _qWeights;
 }

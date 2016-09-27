@@ -3,13 +3,13 @@
 
 #include <Eigen/Dense>
 
-#include "univariateQuadrature.hpp"
+#include "UnivariateQuadrature.hpp"
 
-class tensorProductQuadrature {
+class TensorProductQuadrature {
  public:
-  tensorProductQuadrature(void);
-  tensorProductQuadrature(const Eigen::VectorXi &lvl, univariateQuadrature &Q);
-  void init_quadrature(const Eigen::VectorXi &lvl, univariateQuadrature &Q);
+  TensorProductQuadrature(void);
+  TensorProductQuadrature(const Eigen::VectorXi &lvl, UnivariateQuadrature &Q);
+  void initQuadrature(const Eigen::VectorXi &lvl, UnivariateQuadrature &Q);
   const Eigen::VectorXd &get_weights(void) const;
   const Eigen::MatrixXd &get_points(void) const;
   int get_nPts(void) const;

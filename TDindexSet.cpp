@@ -17,7 +17,7 @@ void TDindexSet::set_w(const Eigen::VectorXd &w) {
 *                 gamma times index
 *
 */
-void TDindexSet::comp_indexSet(int q, const Eigen::VectorXd &w) {
+void TDindexSet::computeIndexSet(int q, const Eigen::VectorXd &w) {
   int k = 0;
   Eigen::VectorXi currInd(w.size());
 
@@ -39,9 +39,9 @@ void TDindexSet::comp_indexSet(int q, const Eigen::VectorXd &w) {
   // test if 0 is in Xw, else index set empty due to downward closedness
   if (0 <= _q) {
     _sumW = _w.sum();
-    if (_sumW > _q) _cw(0) = TDindexSet::cw_alpha(_q, 0, 1, 1);
+    if (_sumW > _q) _cw(0) = TDindexSet::combiWeights(_q, 0, 1, 1);
     if (_cw(0)) ++k;
-    TDindexSet::Yw_alpha(0, &k, _q, currInd);
+    TDindexSet::combiIndexSet(0, &k, _q, currInd);
   }
 
   _alpha.conservativeResize(_dim, k);
@@ -62,8 +62,8 @@ void TDindexSet::init_sortW(void) {
 /**    \brief computes indices in weighted sparse grid space (recursive)
 *
 */
-void TDindexSet::Yw_alpha(int maxBit, int *k, double q,
-                          Eigen::VectorXi &currInd) {
+void TDindexSet::combiIndexSet(int maxBit, int *k, double q,
+                               Eigen::VectorXi &currInd) {
   int cw = 0;
   double scap = 0;
   for (int i = maxBit; i < _dim; ++i) {
@@ -72,7 +72,7 @@ void TDindexSet::Yw_alpha(int maxBit, int *k, double q,
     if (q >= 0) {
       scap = _w.dot(currInd.cast<double>());
       if (scap > _q - _sumW)
-        cw = TDindexSet::cw_alpha(_q - scap, 0, 1, 1);
+        cw = TDindexSet::combiWeights(_q - scap, 0, 1, 1);
       else
         cw = 0;
       if (cw) {
@@ -84,7 +84,7 @@ void TDindexSet::Yw_alpha(int maxBit, int *k, double q,
         _cw(*k) = cw;
         ++(*k);
       }
-      Yw_alpha(i, k, q, currInd);
+      TDindexSet::combiIndexSet(i, k, q, currInd);
       q += _w(i);
       --currInd(i);
     } else {  // this is the major difference to the base class, we may break
@@ -99,7 +99,7 @@ void TDindexSet::Yw_alpha(int maxBit, int *k, double q,
 /**    \brief computes weights for the tensor product quadrature (recursive)
 *
 */
-int TDindexSet::cw_alpha(double q, int maxBit, int cw, int lvl) {
+int TDindexSet::combiWeights(double q, int maxBit, int cw, int lvl) {
   for (int i = maxBit; i < _dim; ++i) {
     q -= _w(i);
     if (q >= 0) {
@@ -107,7 +107,7 @@ int TDindexSet::cw_alpha(double q, int maxBit, int cw, int lvl) {
         --cw;
       else
         ++cw;
-      cw = TDindexSet::cw_alpha(q, i + 1, cw, lvl + 1);
+      cw = TDindexSet::combiWeights(q, i + 1, cw, lvl + 1);
       q += _w(i);
     } else {  // this is the major difference to the base class, we may break
               // here due to the increasingly ordered weights

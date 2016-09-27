@@ -6,16 +6,17 @@ format long;
 fun1 = @(x) prod((1.+1./size(x,1))*(0.5*x+0.5).^(1./size(x,1)),1);
 fun2 = @(x) prod(0.5*pi*sin(pi*(0.5*x+0.5)),1);
 fun3 = @(x) prod(exp(0.5*x+0.5)/(exp(1)-1));
-maxLvl = 10;
+maxLvl = 20;
 dim = 5;
 
 
 % init univariate CC quadrature
 Quad = cell(maxLvl+1,1);
 for i = 0:maxLvl
-    [xi,w] = univariateClenshawCurtis(i);
+    %[xi,w] = univariateClenshawCurtis(i);
+    [xi,w] = univariateGaussLegendre(i);
     %[xi,w] = univariateTrapezoidalRule(i);
-    Quad{i+1} = [xi;w];
+    Quad{i+1} = [xi;2*w];
 end
 
 % test sparse quadrature
