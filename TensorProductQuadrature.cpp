@@ -1,4 +1,4 @@
-#include "tensorProductQuadrature.hpp"
+#include "TensorProductQuadrature.hpp"
 
 /**    \brief default constructor without arguments
 *
