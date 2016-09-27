@@ -6,11 +6,11 @@
 #include "mex.h"
 #include "matrix.h"
 
-#include "sparseIndexSet.hpp"
+#include "SparseIndexSet.hpp"
 #include "TDindexSet.hpp"
 #include "HCindexSet.hpp"
-#include "sparseQuadrature.hpp"
-#include "cell2univariateQuadrature.hpp"
+#include "SparseQuadrature.hpp"
+#include "Cell2univariateQuadrature.hpp"
 
 // fancy compare functor that performs the callback to Matlab
 struct MatlabCpFun {
