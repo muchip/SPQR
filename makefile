@@ -22,7 +22,7 @@ EIGENPATH= /usr/include/eigen3/
 #
 #
 
-OBJ = MXsparseQuadrature.cpp sparseQuadrature.o tensorProductQuadrature.o\
+OBJ = MXsparseQuadrature.cpp SparseQuadrature.o TensorProductQuadrature.o\
 		TDindexSet.o
 
 all:			$(OBJ)
