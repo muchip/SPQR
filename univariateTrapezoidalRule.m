@@ -1,5 +1,6 @@
 function [xi,w] = univariateTrapezoidalRule(l)
 % abscissas and weights for the nested open trapezoidal rule, I=[-1,1]
+% the weight is normalized (probability measure)
 % l is the quadrature level
 
 wRef = [0.5 0.5];
@@ -19,6 +20,6 @@ else
         xi(2*(j-1)+1:2*(j-1)+2) = tau(xiRef,l+1,j-1);
     end
     xi = 2*xi-1;
-    w = 2*ones(size(xi))*0.5/2^(l);
+    w = ones(size(xi))*0.5/2^(l);
 end
 end

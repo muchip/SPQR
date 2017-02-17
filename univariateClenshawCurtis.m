@@ -1,5 +1,6 @@
 function [xi,w] = univariateClenshawCurtis (l)
 % abscissas and weights for the nested Clenshaw-Curtis formulas, I=[-1,1]
+% the weight is normalized (probability measure)
 % abscissas are the extreme points of the Chebyshev polynomials
 % l is the level of the quadrature
 
@@ -35,6 +36,6 @@ else
     % prevent 0/0 situation for s = 1
     gamma(2) = 0;
     w1 = (gamma(1)+2*sum(gamma(2:n-1))+gamma(n)) / (2*n-2);
-    w = [w1,w,w1];
+    w = 0.5 * [w1,w,w1];
 end
 end

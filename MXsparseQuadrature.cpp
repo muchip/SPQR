@@ -82,6 +82,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   std::string type(mxArrayToString(prhs[2]));
 
   CellUniQ.initQuadrature(prhs[3]);
+  
+  // convert type to uppercase
+  for (auto i = type.begin(); i != type.end(); ++i)
+    *i = std::toupper(*i);
 
   if (type == "TD") {
     if (mxIsClass(prhs[4], "function_handle"))
@@ -104,7 +108,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
     HCind.computeIndexSet(q, Eigen::Map<Eigen::VectorXd>(mxGetPr(prhs[4]), dim));
     Q = SparseQuadrature(HCind, CellUniQ);
     Q.purgeSparseQuadrature();
-  } else if (type == "Gen") {
+  } else if (type == "GEN") {
     if (!mxIsClass(prhs[4], "function_handle"))
       mexErrMsgIdAndTxt("MATLAB:MXsparseQuadraturecpp",
                         "Last argument has to be function handle if Gen is "
@@ -113,6 +117,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
     GENind.computeIndexSet(q, dim, MatlabCpFun(prhs[4], dim));
     Q = SparseQuadrature(GENind, CellUniQ);
     Q.purgeSparseQuadrature();
+  } else {
+    mexErrMsgIdAndTxt("MATLAB:MXsparseQuadraturecpp",
+                        "type has an invalid value. Check help.");
   }
 
   const Eigen::MatrixXd &myqPoints = Q.get_qPoints();

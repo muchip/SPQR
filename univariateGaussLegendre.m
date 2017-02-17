@@ -12,7 +12,7 @@ if n == 1
 else
    subd = [1:n-1] ./ sqrt(4*[1:n-1].^2-1);
    A = zeros(n,n);
-   A = diag([subd'],-1) + diag([subd'],1)
+   A = diag([subd'],-1) + diag([subd'],1);
    [V,D] = eig(A);
    xi = diag(D)';
    w = V(1,:).^2;
