@@ -16,5 +16,7 @@ else
    [V,D] = eig(A);
    xi = diag(D)';
    w = V(1,:).^2;
+   if mod(n, 2)
+       xi(floor(n/2)+1) = 0;
 end
 end

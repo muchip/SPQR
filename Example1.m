@@ -17,7 +17,7 @@ r = 2;
 % dimension
 dim = 1000;
 % maximum level q
-maxLvl = 19;
+maxLvl = 16;
 
 % testfunction
 fun = @(x) 1 ./ (0.6 + 0.2 * sum(kron(ones(1,size(x,2)),([1:dim].^-r)') .* x));
