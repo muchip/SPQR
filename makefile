@@ -1,7 +1,7 @@
 ################################################################################
-#   																						          #
-#   makefile																			          #
-#   SParse Quadrature Routines (SPQR)				                               # 
+#                                                                              #
+#   makefile						         	       #
+#   SParse Quadrature Routines (SPQR)				               # 
 #                                                                              #
 #   created 9/11/2016                                                          #
 #                                                                              #
