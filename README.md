@@ -11,6 +11,6 @@ can be found in preprint.pdf.
 
 INSTALLATION
 
-For the installation, you will need make, a C++ compiler ,Eigen and the Matlab-mex compiler.
-In particular you will have to set the correct path to your Eigen library and to your Matlab-mex
-compiler. Afterwards, just execute make.
+For the installation, you will need make, a C++ compiler, Eigen and the Matlab-mex compiler.
+Particularly, you will have to set the correct path to your C++ compiler, to your Eigen library 
+and to your Matlab-mex compiler. Afterwards, just execute make.
