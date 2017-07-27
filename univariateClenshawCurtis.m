@@ -13,7 +13,7 @@ end
 if n == 1
     % midpointrule for the first Level
     xi = 0;
-    w = 2;
+    w = 1;
 else
     ivec = 1:n;
     % evaluation points
